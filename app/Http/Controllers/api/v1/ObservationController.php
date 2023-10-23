@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Computer;
 use App\Models\Observation;
 use Illuminate\Http\Request;
 
@@ -11,20 +12,20 @@ class ObservationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $id)
     {
         //
-        $observations = Observation::orderBy('owner', 'asc')->get();
-
+        $computer = Computer::find($id);
+        
         return response() 
-            ->json(['data' => $observations],
+            ->json(['data' => $computer->observations],
                 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(string $id, Request $request)
     {
         //
         $request = Observation::create($request->all());
@@ -37,20 +38,24 @@ class ObservationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Observation $observation)
+    public function show(string $id, string $observation)
     {
         //
+        $computer = Computer::find($id);
+
         return response()
-            ->json(['data' => $observation],
+            ->json(['data' => $computer->observations->where('id', $observation)->first()],
                 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Observation $observation)
+    public function update(string $id, Request $request, string $observation)
     {
         //
+        $computer = Computer::find($id);
+        $observation = $computer->observations->where('id', $observation)->first();
         $observation->update($request->all());
 
         return response()
@@ -61,12 +66,14 @@ class ObservationController extends Controller
     /**
      * No tiene sentido borrar una observacion.
      */
-    public function destroy(Observation $observation)
+    public function destroy(string $id, string $observation)
     {
         //
-        // $observation->delete();
+        $computer = Computer::find($id);
+        $observation = $computer->observations->where('id', $observation)->first();
+        $observation->delete();
 
-        // return response()
-        //     ->json(null, 204);
+        return response()
+            ->json(null, 204);
     }
 }

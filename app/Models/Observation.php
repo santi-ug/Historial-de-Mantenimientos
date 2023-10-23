@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Observation extends Model
 {
@@ -19,4 +20,19 @@ class Observation extends Model
         'computer',
         'category'
     ];
+
+    public function computer(): BelongsTo 
+    {
+        return $this->belongsTo(Computer::class);
+    }
+
+    public function user(): BelongsTo 
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function category(): BelongsTo 
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

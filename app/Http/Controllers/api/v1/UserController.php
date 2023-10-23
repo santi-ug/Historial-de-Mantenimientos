@@ -74,13 +74,4 @@ class UserController extends Controller
         //     ->json(null, 204);
     }
 
-    public function computers(): HasMany 
-    {
-        return $this->hasMany(Computer::class, 'owner');
-    }
-
-    public function observations(): HasMany 
-    {
-        return $this->hasMany(Observation::class, 'owner');
-    }
 }

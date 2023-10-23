@@ -4,8 +4,10 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Computer;
+use App\Models\Observation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 class ComputerController extends Controller
@@ -72,8 +74,4 @@ class ComputerController extends Controller
             ->json(null, 204);
     }
 
-    public function user(): BelongsTo 
-    {
-        return $this->belongsTo(User::class);
-    }
 }

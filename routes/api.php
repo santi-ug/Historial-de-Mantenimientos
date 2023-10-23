@@ -32,4 +32,8 @@ Route::apiResource('/v1/computers', ComputerController::class);
 Route::apiResource('/v1/categories', CategoryController::class); 
 
 // Ruta para control de observaciones
-Route::apiResource('/v1/observations', ObservationController::class); 
+Route::get('/v1/computers/{id}/observations', [ObservationController::class, 'index']);
+Route::post('/v1/computers/{id}/observations', [ObservationController::class, 'store']);
+Route::get('/v1/computers/{id}/observations/{obs}', [ObservationController::class, 'show']);
+Route::put('/v1/computers/{id}/observations/{obs}', [ObservationController::class, 'update']);
+Route::delete('/v1/computers/{id}/observations/{obs}', [ObservationController::class, 'destroy']);
